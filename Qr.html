@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate QRIS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="qr.css" />
+    <style>
+      body {
+        background-image: url("back.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+      .navbar img {
+        height: 40px;
+      }
+      .container {
+        margin-top: 60px; /* Add top margin to prevent overlap with navbar */
+        flex-grow: 1;
+      }
+      .footer {
+        text-align: center;
+        padding: 10px 0;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .footer a {
+        color: white;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <img src="logo.png" alt="Logo" />
+    </nav>
+
+    <div class="container">
+      <div class="hero-section">
+        <h1 class="hero-title">Generate QRIS</h1>
+      </div>
+
+      <form id="qr-form">
+        <input type="text" id="title" placeholder="Masukkan judul" required />
+        <input type="url" id="link" placeholder="Masukkan link" required />
+        <button type="submit">GENERATE</button>
+      </form>
+      <div id="qrcode"></div>
+      <div class="loader"></div>
+      <div class="social-section">
+        <h3>Request a logo in the QR? Contact me on</h3>
+        <div class="social-icons">
+          <a
+            href="https://instagram.com/yourusername"
+            target="_blank"
+            class="social-icon"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://facebook.com/yourpage"
+            target="_blank"
+            class="social-icon"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://wa.me/yourphonenumber"
+            target="_blank"
+            class="social-icon"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Generate berhasil!</p>
+        <div id="modal-buttons">
+          <button id="downloadPdf">Download PDF</button>
+          <button id="closeModal">Close</button>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+        <a
+          href="https://www.instagram.com/ihfan_sholih/profilecard/?igsh=Zjh3ZWtzc2Rmd3Vm"
+          target="_blank"
+        >
+          <span>&copy; 2024 | Si'Mbah_Research</span>
+    </footer>
+
+    <script src="qr.js"></script>
+  </body>
+</html>
