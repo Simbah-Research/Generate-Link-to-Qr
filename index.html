@@ -43,12 +43,17 @@
         margin-top: 60px;
         flex-grow: 1;
       }
-      .footer {
-        text-align: center;
-        padding: 10px 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-      }
+      .footer a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  display: block; /* Membuat link mencakup seluruh area footer */
+}
+
+.footer a:hover {
+  opacity: 0.8;
+}
     </style>
   </head>
   <body>
