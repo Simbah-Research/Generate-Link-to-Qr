@@ -78,30 +78,103 @@ button:hover {
 }
 
 /* Social Media Section */
+/* Social Media Section dengan style yang diperbarui */
 .social-section {
   text-align: center;
-  padding: 15px;
-  margin-bottom: 0;
+  padding: 20px;
+  margin-top: 30px;
 }
 
 .social-section h3 {
   color: #333;
-  margin-bottom: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 20px;
+  padding: 10px;
 }
 
 .social-icon {
-  color: #333;
-  font-size: 1.8rem;
-  transition: transform 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-icon i {
+  font-size: 1.5rem;
+}
+
+/* Warna khusus untuk setiap platform */
+.social-icon:nth-child(1) {
+  /* Instagram */
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  color: white;
+}
+
+.social-icon:nth-child(2) {
+  /* Facebook */
+  background: #4267b2;
+  color: white;
+}
+
+.social-icon:nth-child(3) {
+  /* TiTok */
+  background: #000000;
+  color: white;
+}
+
+.social-icon:nth-child(4) {
+  /* WhatsApp */
+  background: #25d366;
+  color: white;
+}
+
+/* Efek hover */
+.social-icon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animasi bounce saat hover */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .social-icon:hover {
+  animation: bounce 0.8s infinite;
+}
+
+/* Efek pulse untuk ikon */
+.social-icon i {
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover i {
   transform: scale(1.2);
 }
 
@@ -143,4 +216,21 @@ button {
   cursor: pointer;
   flex: 1; /* Supaya tombol sama besar */
   margin: 0 5px;
+}
+.image-upload {
+  margin: 10px 0;
+}
+
+.image-upload label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+#logo {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
 }
