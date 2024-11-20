@@ -8,23 +8,18 @@ const downloadBtn = document.getElementById("downloadPdf");
 const closeModalBtn = document.getElementById("closeModal");
 let qrCodeInstance;
 
-// Service dropdown functionality
-const serviceBtn = document.querySelector(".service-btn");
-const dropdownContent = document.querySelector(".dropdown-content");
-
 // Close dropdown when clicking outside
 document.addEventListener("click", (e) => {
   if (!e.target.matches(".service-btn")) {
-    serviceBtn.classList.remove("active");
+    const serviceBtn = document.querySelector(".service-btn");
+    if (serviceBtn) serviceBtn.classList.remove("active");
   }
 });
 
 // Navbar scroll behavior
 window.addEventListener("scroll", () => {
   const navbar = document.querySelector(".navbar");
-  if (window.scrollY > 50) {
-    navbar.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
-  } else {
+  if (navbar) {
     navbar.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
   }
 });
@@ -34,6 +29,10 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.getElementById("title").value;
   const link = document.getElementById("link").value;
+  const initials = document
+    .getElementById("initials")
+    .value.trim()
+    .toUpperCase();
 
   loader.style.display = "block";
   qrcodeDiv.innerHTML = "";
@@ -48,27 +47,30 @@ form.addEventListener("submit", async (e) => {
     height: 256,
   });
 
-  // Add (SR) text to the center of QR code
+  // Add initials or SR text to the center of QR code
   const qrImage = qrcodeDiv.querySelector("img");
-  const srText = document.createElement("div");
-  srText.textContent = "SR";
-  srText.style.position = "absolute";
-  srText.style.top = "50%";
-  srText.style.left = "50%";
-  srText.style.transform = "translate(-50%, -50%)";
-  srText.style.fontSize = "34px";
-  srText.style.fontWeight = "bold";
-  srText.style.color = "black";
-  srText.style.backgroundColor = "white";
-  srText.style.padding = "10px"; // Menambahkan padding untuk membuat teks lebih besar
-  srText.style.borderRadius = "50%"; // Membuat latar belakang teks menjadi bulat
-  srText.style.width = "50px"; // Mengatur lebar teks agar latar belakang juga bulat
-  srText.style.height = "50px"; // Mengatur tinggi teks agar latar belakang juga bulat
-  srText.style.display = "flex"; // Mengaktifkan tampilan flex
-  srText.style.justifyContent = "center"; // Mengatur posisi teks secara horizontal
-  srText.style.alignItems = "center"; // Mengatur posisi teks secara vertikal
+  const centerText = document.createElement("div");
+  centerText.textContent = initials || "SR";
+  centerText.style.position = "absolute";
+  centerText.style.top = "50%";
+  centerText.style.left = "50%";
+  centerText.style.transform = "translate(-50%, -50%)";
+
+  // Dynamic font sizing based on initials length
+  centerText.style.fontSize = initials.length > 2 ? "20px" : "34px";
+  centerText.style.fontWeight = "bold";
+  centerText.style.color = "black";
+  centerText.style.backgroundColor = "white";
+  centerText.style.padding = "10px";
+  centerText.style.borderRadius = "50%";
+  centerText.style.width = "50px";
+  centerText.style.height = "50px";
+  centerText.style.display = "flex";
+  centerText.style.justifyContent = "center";
+  centerText.style.alignItems = "center";
   qrcodeDiv.style.position = "relative";
-  qrcodeDiv.appendChild(srText);
+  qrcodeDiv.appendChild(centerText);
+
   // Center the QR code
   qrcodeDiv.style.display = "flex";
   qrcodeDiv.style.justifyContent = "center";
@@ -82,22 +84,30 @@ form.addEventListener("submit", async (e) => {
 
   console.log("Title:", title);
   console.log("Link:", link);
+  console.log("Initials:", initials || "SR");
 });
 
 // Modal handling
-closeBtn.onclick = closeModalBtn.onclick = () => {
+function closeModal() {
   modal.style.display = "none";
   form.reset();
   qrcodeDiv.innerHTML = "";
   downloadBtn.style.display = "none";
   closeModalBtn.style.display = "none";
-};
+}
+
+closeBtn.onclick = closeModal;
+closeModalBtn.onclick = closeModal;
 
 // PDF generation
 downloadBtn.onclick = () => {
   const pdf = new jsPDF();
   const title = document.getElementById("title").value;
   const link = document.getElementById("link").value;
+  const initials = document
+    .getElementById("initials")
+    .value.trim()
+    .toUpperCase();
 
   const pageWidth = pdf.internal.pageSize.width;
   const pageHeight = pdf.internal.pageSize.height;
@@ -114,12 +124,14 @@ downloadBtn.onclick = () => {
   const qrCodeY = 60;
   pdf.addImage(qrCodeDataUrl, "PNG", qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
 
-  // Add (SR) text to the center of QR code in PDF
+  // Add text to the center of QR code in PDF
   pdf.setFillColor(255, 255, 255);
   pdf.circle(pageWidth / 2, qrCodeY + qrCodeSize / 2, 10, "F");
-  pdf.setFontSize(18);
+
+  // Dynamic font sizing for PDF
+  pdf.setFontSize(initials.length > 2 ? 14 : 18);
   pdf.setTextColor(0);
-  pdf.text("SR", pageWidth / 2, qrCodeY + qrCodeSize / 2, {
+  pdf.text(initials || "SR", pageWidth / 2, qrCodeY + qrCodeSize / 2, {
     align: "center",
     baseline: "middle",
   });
@@ -128,12 +140,9 @@ downloadBtn.onclick = () => {
   pdf.setFontSize(10);
   pdf.setFont(undefined, "normal");
   const linkWidth = qrCodeSize;
-  const linkX = qrCodeX;
   const linkY = qrCodeY + qrCodeSize + 10;
 
   const linkLines = pdf.splitTextToSize(link, linkWidth);
-  const linkHeight = pdf.getTextDimensions(linkLines).h;
-
   pdf.text(linkLines, pageWidth / 2, linkY, {
     align: "center",
     maxWidth: linkWidth,
@@ -159,11 +168,14 @@ window.onclick = (event) => {
   }
 };
 
+// Mobile navigation toggle
 document.addEventListener("DOMContentLoaded", function () {
   const navToggle = document.querySelector(".nav-toggle");
   const navMenu = document.querySelector(".nav-menu");
 
-  navToggle.addEventListener("click", function () {
-    navMenu.classList.toggle("active");
-  });
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", function () {
+      navMenu.classList.toggle("active");
+    });
+  }
 });
