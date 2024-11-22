@@ -151,7 +151,7 @@ downloadBtn.onclick = () => {
   // Footer
   pdf.setFontSize(10);
   pdf.setTextColor(100);
-  const footerText = "© 2024 SR | All rights reserved.";
+  const footerText = "© 2024 | Si'Mbah_Research";
   pdf.text(footerText, pageWidth / 2, pageHeight - 10, {
     align: "center",
   });
